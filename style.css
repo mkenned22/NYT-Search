@@ -1,0 +1,31 @@
+/*Styling Sheet for NY Times Search
+/*Styling elements below*/
+Body{
+    background = blue;
+}
+#Name{
+    box-sizing: border-box;
+    background: #4aaaa5;
+    color: #ffffff;
+    padding: 30px;
+    text-align: center;
+    margin-left: 50px;
+    margin-right: 50px;
+    margin-top: 0px;
+    font-size:40px;
+    border-top: 2px solid #4aaaa5;
+}
+.searchContainer{
+    box-sizing: border-box;
+    background: #4aaaa5;
+    color: #ffffff;
+    padding: 30px;
+    margin-left: 50px;
+    margin-right: 50px;
+    margin-top: 0px;
+    font-size:24px;
+    border-top: 2px solid #4aaaa5;    
+}
+
+
+Add CommentCollapse 

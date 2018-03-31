@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <link rel="stylesheet" type="text/css" href="Assets/Reset.css">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Document</title>
+</head>
+<body>
+    
+        <Div Class="headerContainer">
+            <h1 id = "Name">
+            New York Times Search
+            </h1>
+        </Div>
+        <br>
+        <!--HTML Contact Form-->
+        <div class="searchContainer">
+            <h2>
+              Search Parameters
+            </h2><hr>
+            <form>
+              <label for="searchTerm">Search Term</label>
+                <input type="text" id="searchTerm" name="searchTerm" placeholder="Enter your search here..">
+                    <br><br>
+              <label for="numberofRecords">Number of Records to Retrieve</label>
+                <input type="text" id="numberofRecords" name="numberofRecords" placeholder="5,10..">
+                    <br><br>
+              <label for="startYear">Start Year (Optional)</label>
+                <input type="text" id="startYear" name="startYear" placeholder="2017">
+                    <br><br>
+              <label for="endYear">End Year (Optional)</label>
+                <input type="text" id="endYear" name="endYear" placeholder="2018">
+                    <br><br>
+                
+                <div id="buttons">
+                  <button id="searchData">
+                    Search
+                  </button>
+                  <button id="clearResults">
+                    Clear Results
+                  </button>
+                </div>
+            </form>
+            
+        </div>
+        <br>
+        <div id="resultsSection" class="searchContainer"></div>
+    
+    <button></button>
+    <script>
+        $(document).ready(function () {
+            $("#searchData").on("click",function(event){
+                event.preventDefault();
+                var queryString = "https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=bb7653b842444761ac6d859253289074";
+                var search = $("#searchTerm").val().trim();
+                var results = ($("#numberofRecords").val().trim());
+                var start = $("#startYear").val().trim();
+                var end = $("#endYear").val().trim();
+
+                queryString = queryString + "&q=" + search + "&begin_date=" + start + "0101&end_date=" + end + "1231";
+                console.log(queryString);
+                $.ajax({
+                    url: queryString,
+                    method: "get"
+                }).done(function(response){
+                    var data = response.response.docs;
+                    console.log(data);
+                    for(i=0;i<parseInt(results);i++){
+                        var div = $("<div>");
+                        var p1 = $("<div>").text("Article " + i + ": " + data[i].headline.main);
+                        var p2 = $("<div>").text(data[i].byline.original);
+                        var p3 = $("<div>").text("Published: " + data[i].pub_date);
+                        var a = $("<a>").text("Click Here");
+                        a.attr("href",data[i].web_url);
+                        div.append(p1);
+                        div.append(p2);
+                        div.append(p3);
+                        div.append(a);
+                        $("#resultsSection").append(div);
+                        $("#resultsSection").append($("<br>"));
+
+                    }
+                    
+                    
+                    
+                });
+            });
+        });
+    </script>
+
+    
+    
+</body>
+</html>
